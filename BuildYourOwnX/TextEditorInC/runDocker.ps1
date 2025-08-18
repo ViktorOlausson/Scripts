@@ -66,15 +66,8 @@ switch ($stage) {
             Reboot-Now
             return
         }
-                Write-Host "Enabling systemd in Ubuntu..." -ForegroundColor Cyan
-        wsl -d $Distro -- bash -lc "set -e
-sudo mkdir -p /etc
-if [ -f /etc/wsl.conf ]; then
-  sudo awk 'BEGIN{seen=0} /^\[boot\]/{seen=1} {print} END{if(seen==0)print \"[boot]\nsystemd=true\"}' /etc/wsl.conf | sudo tee /etc/wsl.conf >/dev/null
-else
-  printf \"[boot]\nsystemd=true\n\" | sudo tee /etc/wsl.conf >/dev/null
-fi
-"
+Write-Host "Enabling systemd in Ubuntu..." -ForegroundColor Cyan
+wsl -d $Distro -- bash -lc "echo -e '[boot]\nsystemd=true' | sudo tee /etc/wsl.conf >/dev/null"
 
         wsl --shutdown
 
