@@ -19,3 +19,14 @@ try{
 }catch{
     Write-Output "Docker Hub CLI is NOT available, please install Docker to run this command"
 }
+
+try{
+    docker info >$null 2>&1
+    if($LASTEXITCODE -eq 0){
+        Write-Output "Docker daemon is running"
+    }else{
+      Write-Output "Docker daemon is not running"  
+    }
+}catch{
+    Write-Output "Docker daemon is not running"
+}
