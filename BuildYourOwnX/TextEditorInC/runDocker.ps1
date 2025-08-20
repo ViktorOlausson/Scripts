@@ -4,10 +4,10 @@ try{
     if($LASTEXITCODE -eq 0){
         Write-Host "Docker Hub CLI is installed" -ForegroundColor Green
     }else{
-        Write-Host "Docker Hub CLI is NOT installed, please install Docker to run this command"
+        Write-Host "Docker Hub CLI is NOT installed, please install Docker to run this command" -ForegroundColor Red
     }
 }catch{
-    Write-Host "Docker Hub CLI is NOT available, please install Docker to run this command"
+    Write-Host "Docker Hub CLI is NOT available, please install Docker to run this command" -ForegroundColor Red
 }
 
 try{
@@ -16,11 +16,11 @@ try{
     if($LASTEXITCODE -eq 0){
         Write-Host "Docker Engine is installed" -ForegroundColor Green #no output if installed?
     }else {
-        Write-Host "Docekr Engine is NOT installed, please install Docker to run this command"
+        Write-Host "Docekr Engine is NOT installed, please install Docker to run this command" -ForegroundColor Red
         exit 1
     }
 }catch{
-    Write-Host "Docekr Engine is NOT installed, please install Docker to run this command"
+    Write-Host "Docekr Engine is NOT installed, please install Docker to run this command" -ForegroundColor Red
     exit 1
 }
 
@@ -30,11 +30,11 @@ try{
     if($LASTEXITCODE -eq 0){
         Write-Host "Docker daemon is running" -ForegroundColor Green
     }else{
-        Write-Host "Docker daemon is not running, please start docker and rerun this script"
+        Write-Host "Docker daemon is not running, please start docker and rerun this script" -ForegroundColor Red
         exit 1
     }
 }catch{
-    Write-Host "Docker daemon is not running"
+    Write-Host "Docker daemon is not running" -ForegroundColor Red
     exit 1
 }
 
@@ -44,11 +44,11 @@ try {
     if($LASTEXITCODE -eq 0){
         Write-Host "Pulled docker image" -ForegroundColor Green
     }else{
-        Write-Host "Failed to pull docker image"
+        Write-Host "Failed to pull docker image" -ForegroundColor Red
         exit 1
     }
 }
 catch {
-    Write-Host "Failed to pull docker image"
+    Write-Host "Failed to pull docker image" -ForegroundColor Red
     exit 1
 }
