@@ -4,6 +4,7 @@ try{
         Write-Output "Docker Engine is installed" #no output if installed?
     }else {
         Write-Output "Docekr Engine is NOT installed, please install Docker to run this command"
+        exit 1
     }
 }catch{
     Write-Output "Docekr Engine is NOT installed, please install Docker to run this command"
@@ -14,7 +15,7 @@ try{
     if($LASTEXITCODE -eq 0){
         Write-Output "Docker Hub CLI is installed"
     }else{
-      Write-Output "Docker Hub CLI is NOT installed, please install Docker to run this command"  
+        Write-Output "Docker Hub CLI is NOT installed, please install Docker to run this command"
     }
 }catch{
     Write-Output "Docker Hub CLI is NOT available, please install Docker to run this command"
@@ -25,7 +26,8 @@ try{
     if($LASTEXITCODE -eq 0){
         Write-Output "Docker daemon is running"
     }else{
-      Write-Output "Docker daemon is not running"  
+        Write-Output "Docker daemon is not running, please start docker and rerun this script"
+        exit 1
     }
 }catch{
     Write-Output "Docker daemon is not running"
