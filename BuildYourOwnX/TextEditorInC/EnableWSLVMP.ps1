@@ -15,7 +15,7 @@ function Enable-Feature {
             }else {
                 Write-Host "Failed to enable '$Name' (Exit code $LASTEXITCODE)" -ForegroundColor Red
                 Write-Host ($output | Select-Object -Last 5) -ForegroundColor Red
-                #Exit 1
+                Exit 1
             }
         }
         catch {
@@ -33,12 +33,16 @@ try {
     if($LASTEXITCODE -eq 0){
         Write-Host "WSL version has been set to version 2" -ForegroundColor Green
     }else{
-        Write-Host "Unable to set WSL to version 2" -ForegroundColor Red
+        Write-Host "Unable to set WSL to version 2 (exit code $LASTEXITCODE)." -ForegroundColor Red
         Write-Host ($setWsl | Select-Object -Last 5) -ForegroundColor Red
-    }
+    }   
 }
 catch {
     Write-Host "Failed to set WSL default version: $($_.Exception.Message)" -ForegroundColor Red
 }
-
-Write-Host "WSL2 prerequisites ensured. If features were just enabled, a reboot may be required." -ForegroundColor Yellow
+$pending = Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction SilentlyContinue
+if ($pending) {
+    Write-Host "System restart is required." -ForegroundColor Yellow
+}
+#Write-Host "WSL2 prerequisites ensured. If features were just enabled, a reboot may be required." -ForegroundColor Yellow
+Write-Host "No restart needed" -ForegroundColor Green
