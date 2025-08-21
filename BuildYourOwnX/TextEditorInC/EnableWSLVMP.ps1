@@ -14,8 +14,8 @@ function Enable-Feature {
                 Write-Host "'$Name' has been enabled" -ForegroundColor Green
             }else {
                 Write-Host "Failed to enable '$Name' (Exit code $LASTEXITCODE)" -ForegroundColor Red
-                Write-Host ($output | Select-Object -Last 5) -ForegroundColor Red #does not work
-                Exit 1
+                Write-Host ($output | Select-Object -Last 5) -ForegroundColor Red
+                #Exit 1
             }
         }
         catch {
@@ -28,10 +28,17 @@ function Enable-Feature {
 Enable-Feature Microsoft-Windows-Subsystem-Linux
 Enable-Feature VirtualMachinePlatform
 try {
-    wsl --set-default-version 2 *> $null
+    Write-Host "Setting WSL to version 2" -ForegroundColor Yellow
+    $setWsl = & wsl --set-default-version 2 *> $null
+    if($LASTEXITCODE -eq 0){
+        Write-Host "WSL version has been set to version 2" -ForegroundColor Green
+    }else{
+        Write-Host "Unable to set WSL to version 2" -ForegroundColor Red
+        Write-Host ($setWsl | Select-Object -Last 5) -ForegroundColor Red
+    }
 }
 catch {
     Write-Host "Failed to set WSL default version: $($_.Exception.Message)" -ForegroundColor Red
 }
 
-Write-Host "WSL2 prerequisites ensured. If features were just enabled, a reboot may be required." -ForegroundColor Green
+Write-Host "WSL2 prerequisites ensured. If features were just enabled, a reboot may be required." -ForegroundColor Yellow
