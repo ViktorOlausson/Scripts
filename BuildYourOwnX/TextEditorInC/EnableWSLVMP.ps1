@@ -9,11 +9,12 @@ function Enable-Feature {
     }else{
         try {
             Write-Host "Enabling '$Name" -ForegroundColor Yellow
-            dism.exe /online /enabled-feature /featurename:$name /all /norestart *> $null
+             $output = & dism.exe /online /enabled-feature /featurename:$name /all /norestart *> $null
             if($LASTEXITCODE -eq 0){
                 Write-Host "'$Name' has been enabled" -ForegroundColor Green
             }else {
-                Write-Host "Something went wrong" -ForegroundColor Red
+                Write-Host "Failed to enable '$Name' (Exit code $LASTEXITCODE)" -ForegroundColor Red
+                Write-Host ($output | Select-Object -Last 5) -ForegroundColor Red
             }
         }
         catch {
