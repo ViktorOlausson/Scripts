@@ -1,20 +1,13 @@
+#Requires -RunAsAdministrator
 $ErrorActionPreference = 'Stop'
 
-$osArch = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture.ToString()
-$channel = if ($osArch -eq 'Arm64') { 'arm64' } else { 'amd64' }
-
-$downloadUrl = "https://desktop.docker.com/win/main/$channel/Docker%20Desktop%20Installer.exe"
-
-$installer = Join-Path $env:TEMP "DockerDesktopInstaller-$channel.exe"
-
-Write-Host "Detected OS architecture: $osArch"
-Write-Host "Downloading: $downloadUrl"
+Write-Host "Downloading docker" -ForegroundColor Cyan
 
 try {
-    Invoke-WebRequest -Uri $downloadUrl -OutFile $installer
+    winget install --id Docker.DockerDesktop -e --silent --accept-source-agreements --accept-package-agreements
     try {
         Start-Process -FilePath $installer -ArgumentList $arguments -Wait
-        if($LASTEXITCODE -eq 0){
+        if($LASTEXITCODE -eq 0 -or $LASTEXITCODE -eq 3010){
             $pendingRestart = Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction SilentlyContinue
             if($pendingRestart){
                 Write-Host "Docker Desktop installed. But restart is needed" -ForegroundColor Yellow
@@ -28,11 +21,11 @@ try {
         }
     }
     catch {
-        Write-Host "Unable to install docker" -ForegroundColor Red
-        Exit 1
+        Write-Host "winget failed with exit code $exitCode" -ForegroundColor Red
+        Exit $exitCode
     } 
 }
 catch {
-    Write-Host "Unable to download docker installer" -ForegroundColor Red
+    Write-Host "Unable to install Docker Desktop: $_" -ForegroundColor Red
     Exit 1
 }
