@@ -22,10 +22,12 @@ try {
     }
     catch {
         Write-Host "winget failed with exit code $exitCode" -ForegroundColor Red
+        Write-Host "Please try and install docker manually and try again" -ForegroundColor Yellow
         Exit $exitCode
     } 
 }
 catch {
     Write-Host "Unable to install Docker Desktop: $_" -ForegroundColor Red
+    Write-Host "Please try and install docker manually and try again" -ForegroundColor Yellow
     Exit 1
 }

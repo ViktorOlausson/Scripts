@@ -5,6 +5,7 @@ try{
         Write-Host "Docker Hub CLI is installed" -ForegroundColor Green
     }else{
         Write-Host "Docker Hub CLI is NOT installed, please install Docker to run this command" -ForegroundColor Red
+        & .\installDocker
     }
 }catch{
     Write-Host "Docker Hub CLI is NOT available, please install Docker to run this command" -ForegroundColor Red

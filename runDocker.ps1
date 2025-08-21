@@ -1,4 +1,5 @@
-#if docker image already exists, dont
+#if docker image already exists, dont pull
+##add reusablity
 
 try {
     Write-Host "Pulling docker image..." -ForegroundColor Yellow
