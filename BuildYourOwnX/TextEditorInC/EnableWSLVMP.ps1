@@ -42,7 +42,9 @@ catch {
 }
 $pending = Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction SilentlyContinue
 if ($pending) {
-    Write-Host "System restart is required." -ForegroundColor Yellow
+    Write-Host "WSL2 prerequisites ensured." -ForegroundColor Green
+    Write-Host "System restart is required. Restart and run this script again" -ForegroundColor Yellow
+}else{
+    Write-Host "WSL2 prerequisites ensured." -ForegroundColor Green
+    Write-Host "No restart needed" -ForegroundColor Green
 }
-#Write-Host "WSL2 prerequisites ensured. If features were just enabled, a reboot may be required." -ForegroundColor Yellow
-Write-Host "No restart needed" -ForegroundColor Green
