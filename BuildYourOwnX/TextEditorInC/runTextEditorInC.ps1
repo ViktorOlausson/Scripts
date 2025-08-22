@@ -1,4 +1,4 @@
-function Run-Script {
+function Run {
     param ([string]$Name)
     $targetScript = Join-Path $PSScriptRoot "..\..\$Name.ps1"
     
@@ -10,13 +10,13 @@ function Run-Script {
     }
 }
 
-Run-Script checkIsAdmin
+Run checkIsAdmin
 
-Run-Script EnableWSLVMP
+Run EnableWSLVMP
 
-Run-Script checkDocker
+Run checkDocker
 
-Run-Script pullDocker ##add Docker image param
+Run pullDocker ##add Docker image param
 
 #ask for file path
 #if it is a folder, ask for a file name to be created and then use that file
