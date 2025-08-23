@@ -2,7 +2,6 @@ param(
     [string]$Image = ""
 )
 
-#Write-Host "Checking for docker image" -ForegroundColor Cyan
 docker image inspect $image *> $null
 
 if($LASTEXITCODE -ne 0){

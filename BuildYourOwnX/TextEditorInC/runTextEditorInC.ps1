@@ -25,18 +25,14 @@ Run checkDocker
 
 Run pullDocker $Image
 
-#ask for file path
-#if it is a folder, ask for a file name to be created and then use that file
-#if it is an file use the parent folder as path and use the file to launch
-
 & Clear-Host
 
 Write-Host "Choose a texted based file to edit" -ForegroundColor Cyan
 
 Add-Type -AssemblyName System.Windows.Forms
 $dialog = New-Object System.Windows.Forms.OpenFileDialog
-$dialog.InitialDirectory = [Environment]::GetFolderPath("Desktop")   # default folder
-$dialog.Filter = "All files (*.*)|*.*"                               # filter
+$dialog.InitialDirectory = [Environment]::GetFolderPath("Desktop")
+$dialog.Filter = "All files (*.*)|*.*"
 
 if ($dialog.ShowDialog() -eq "OK") {
     $blockedExtensions = ".exe", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp4", ".avi", ".mov", ".mkv", ".mp3", ".wav"

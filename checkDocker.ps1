@@ -6,12 +6,12 @@ try{
     }else{
         Write-Host "Docker Hub CLI is NOT installed, please install Docker to run this command" -ForegroundColor Red
         & "$PSScriptRoot\installDocker.ps1"
-        ##add stop mechanic if fail
+        exit 1
     }
 }catch{
     Write-Host "Docker Hub CLI is NOT available, please install Docker to run this command" -ForegroundColor Red
     & "$PSScriptRoot\installDocker.ps1"
-    ##add stop mechanic if fail
+    exit 1
 }
 
 try{

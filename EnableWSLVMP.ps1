@@ -35,16 +35,20 @@ try {
     }else{
         Write-Host "Unable to set WSL to version 2 (exit code $LASTEXITCODE)." -ForegroundColor Red
         Write-Host ($setWsl | Select-Object -Last 5) -ForegroundColor Red
+        exit 1
     }   
 }
 catch {
     Write-Host "Failed to set WSL default version: $($_.Exception.Message)" -ForegroundColor Red
+    exit 1
 }
 $pending = Test-Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending" -ErrorAction SilentlyContinue
 if ($pending) {
     Write-Host "WSL2 prerequisites ensured." -ForegroundColor Green
     Write-Host "System restart is required. Restart and run this script again" -ForegroundColor Yellow
+    exit 1
 }else{
     Write-Host "WSL2 prerequisites ensured." -ForegroundColor Green
     Write-Host "No restart needed" -ForegroundColor Green
+    exit 1
 }
