@@ -1,5 +1,3 @@
-#if docker image already exists, dont pull
-##add reusablity
 param(
     [string]$Image = ""
 )
