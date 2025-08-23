@@ -37,8 +37,15 @@ $dialog.InitialDirectory = [Environment]::GetFolderPath("Desktop")   # default f
 $dialog.Filter = "All files (*.*)|*.*"                               # filter
 
 if ($dialog.ShowDialog() -eq "OK") {
+    $blockedExtensions = ".exe", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp4", ".avi", ".mov", ".mkv", ".mp3", ".wav"
     $filePath = $dialog.FileName
-    Write-Host "You chose: $filePath" -ForegroundColor Green
+    $ext = [System.IO.Path]::GetExtension($filePath).ToLower()
+    if ($blockedExtensions -contains $ext) {
+        Write-Host "This file type is not allowed ($ext)." -ForegroundColor Red
+        exit 1
+    } else {
+        Write-Host "You chose: $filePath"
+    }
 } else {
     Write-Host "No file selected, stopping script" -ForegroundColor Red
     exit 1
