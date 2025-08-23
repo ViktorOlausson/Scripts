@@ -15,13 +15,15 @@ function Run {
     }
 }
 
+$Image = "viktorolausson/texteditorinc"
+
 Run checkIsAdmin
 
 Run EnableWSLVMP
 
 Run checkDocker
 
-Run pullDocker "viktorolausson/texteditorinc"
+Run pullDocker $Image
 
 #ask for file path
 #if it is a folder, ask for a file name to be created and then use that file
@@ -46,7 +48,11 @@ if ($dialog.ShowDialog() -eq "OK") {
     } else {
         Write-Host "You chose: $filePath"
     }
+    $folderPath = [System.IO.Path]::GetDirectoryName($filePath)
+    $fileName   = [System.IO.Path]::GetFileName($filePath)
 } else {
     Write-Host "No file selected, stopping script" -ForegroundColor Red
     exit 1
 }
+
+& docker run --rm -it --mount type=bind,source=$folderPath,target=/data/ $Image /data/$fileName
