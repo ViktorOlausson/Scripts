@@ -50,5 +50,5 @@ if ($pending) {
 }else{
     Write-Host "WSL2 prerequisites ensured." -ForegroundColor Green
     Write-Host "No restart needed" -ForegroundColor Green
-    exit 1
+    exit 0
 }
