@@ -1,3 +1,5 @@
+& Clear-Host
+
 function Run {
     param ([string]$Name, [string]$DockerImage)
     $targetScript = Join-Path $PSScriptRoot "..\..\$Name.ps1"
