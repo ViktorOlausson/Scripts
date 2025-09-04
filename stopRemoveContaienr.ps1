@@ -3,17 +3,19 @@ param(
 )
 
 try {
-    Write-Host "Stopping and Removing existing containers for this image" -ForegroundColor Yellow
+    Write-Host "Checking if docker container exists" -ForegroundColor Cyan
     #check if container exists
-
-    #if it exists check if it is running
-
-    #if both true: stop container and then remove it
-
-    #if container not running: remove the container
-
-    #if neither: do nothing
+    if(docker ps --filter "name=$container" --format "{{.Names}}"){
+        Write-Host "docker container exists and is running" -ForegroundColor Cyan
+        Write-Host "Stopping and removing container" -ForegroundColor Yellow
+    }elseif(docker ps -a --filter "name=$container" --format "{{.Names}}"){
+        Write-Host "docker container exists but is not running" -ForegroundColor Cyan
+        Write-Host "Removing container" -ForegroundColor Yellow
+    }else{
+        Write-Host "Container does not exist" -ForegroundColor Green
+    }
 }
 catch {
-    <#Do this if a terminating exception happens#>
+    Write-Host "Oops. Something went wrong: $_" -ForegroundColor Red
+    Exit 1
 }
