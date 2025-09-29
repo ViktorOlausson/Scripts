@@ -1,3 +1,5 @@
+& Clear-Host
+
 function Run {
     param ([string]$Name, [string]$DockerImage)
     $targetScript = Join-Path $PSScriptRoot "..\..\$Name.ps1"
@@ -35,7 +37,7 @@ $dialog.InitialDirectory = [Environment]::GetFolderPath("Desktop")
 $dialog.Filter = "All files (*.*)|*.*"
 
 if ($dialog.ShowDialog() -eq "OK") {
-    $blockedExtensions = ".exe", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp4", ".avi", ".mov", ".mkv", ".mp3", ".wav"
+    $blockedExtensions = ".exe", ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".mp4", ".avi", ".mov", ".mkv", ".mp3", ".wav", ".jar"
     $filePath = $dialog.FileName
     $ext = [System.IO.Path]::GetExtension($filePath).ToLower()
     if ($blockedExtensions -contains $ext) {
