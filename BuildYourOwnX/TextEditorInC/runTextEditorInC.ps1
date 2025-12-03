@@ -49,8 +49,15 @@ if ($dialog.ShowDialog() -eq "OK") {
     $folderPath = [System.IO.Path]::GetDirectoryName($filePath)
     $fileName   = [System.IO.Path]::GetFileName($filePath)
 } else {
-    Write-Host "No file selected, stopping script" -ForegroundColor Red
-    exit 1
+    Write-Host "No file selected, stopping script" -ForegroundColor Yellow
+    #exit 1
 }
 
-& docker run --rm -it --mount type=bind,source=$folderPath,target=/data/ $Image /data/$fileName
+#& docker run --rm -it --mount type=bind,source=$folderPath,target=/data/ $Image /data/$fileName
+# --- Run Docker depending on whether a file was chosen ---
+if ($folderPath -and $fileName) {
+    &docker run --rm -it --mount type=bind,source=$folderPath,target=/data/ $Image /data/$fileName
+}
+else {
+    &docker run --rm -it $Image
+}
